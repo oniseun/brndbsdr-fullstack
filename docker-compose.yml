@@ -1,0 +1,67 @@
+
+version: "3.7"
+services:
+    redis:
+        container_name: redis-bnet
+        image: redis
+        networks:
+            bnet-network:
+                ipv4_address: 172.27.0.20
+                aliases:
+                - redis.bnet.local
+
+    redis-commander:
+        container_name: redis-commander-bnet
+        hostname: redis-commander-bnet
+        image: rediscommander/redis-commander:latest
+        ports:
+            - "8081:8081"
+        links:
+            - redis
+        environment:
+        - REDIS_HOSTS=redis
+        networks:
+            bnet-network:
+                ipv4_address: 172.27.0.21
+                aliases:
+                - redis-commander.bnet.local
+
+    backend:
+        container_name: bnet-backend
+        build:
+            context: ./brndbsdr-backend
+            dockerfile: Dockerfile
+        ports:
+        - "2020:2020"
+        links:
+            - redis
+        environment:
+            - REDIS_HOST=redis
+            - CURRENCY_CONVERTER_ACCESS_KEY=${CURRENCY_CONVERTER_ACCESS_KEY}
+        networks:
+            bnet-network:
+                ipv4_address: 172.27.0.22
+                aliases:
+                - bnet-backend.local
+
+    frontend:
+        container_name: bnet-frontend
+        build:
+            context: ./brndbsdr-frontend
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        environment:
+            - REACT_APP_API_ENDPOINT=http://localhost:2020
+        networks:
+            bnet-network:
+                ipv4_address: 172.27.0.23
+                aliases:
+                    - bnet-frontend.local
+
+networks:
+    bnet-network:
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.27.0.0/16
