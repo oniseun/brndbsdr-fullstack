@@ -4,7 +4,7 @@
 
 ## Build Setup
 
-EXPORT this environment variable
+- EXPORT this environment variable
 $ EXPORT CURRENCY_CONVERTER_ACCESS_KEY=**your data.fixer.io ACCESS KEY**
 
 ``` bash
