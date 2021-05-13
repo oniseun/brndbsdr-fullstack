@@ -4,10 +4,13 @@
 
 ## Build Setup
 
-# EXPORT this environment variable
-$ EXPORT CURRENCY_CONVERTER_ACCESS_KEY=**your data.fixer.io ACCESS KEY**
+
 
 ``` bash
+
+# EXPORT data.fixer.io environment variable
+$ EXPORT CURRENCY_CONVERTER_ACCESS_KEY=**your data.fixer.io ACCESS KEY**
+
 # make executable
 $ chmod +x start-server.sh
 
