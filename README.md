@@ -27,6 +27,6 @@ $ backend-server localhost:2020 / 172.27.0.22
 $ graphql-server localhost:2020/graphql / 172.27.0.22/graphql
 $ redis-commander-server 127.0.0.1:8081 / 172.27.0.21
 
-All running on the same virtual network
+All services running on the same virtual network
 # Database
 
